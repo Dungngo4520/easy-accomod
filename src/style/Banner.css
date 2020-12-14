@@ -1,0 +1,48 @@
+.banner {
+  background-image: url("https://get.pxhere.com/photo/home-property-living-room-room-interior-design-design-estate-condominium-real-estate-dining-room-modern-living-room-modern-decor-contemporary-decor-stay-open-decoration-design-living-room-design-1286904.jpg");
+  height: 50vh;
+  position: relative;
+  background-position: center;
+}
+
+.banner__info {
+  background-color: black;
+  color: white;
+  padding: 25vh 50px 40px 50px;
+  width: 300px;
+}
+
+.banner__info > button {
+  background-color: #ff7779;
+  color: white;
+  text-transform: inherit;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.banner__info > button:hover {
+  background-color: white;
+  color: #ff7779;
+}
+
+.banner__info > h5 {
+  margin-top: 10px;
+}
+
+.banner__search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.banner__searchButton {
+  background-color: white !important;
+  font-weight: 900 !important;
+  text-transform: inherit !important;
+  color: #ff7779 !important;
+}
+/*# sourceMappingURL=Banner.css.map */
