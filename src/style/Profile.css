@@ -1,0 +1,128 @@
+.profile {
+  padding-top: 3rem;
+  min-width: 700px;
+  width: 50%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.profile__card {
+  -webkit-box-flex: 0.3;
+      -ms-flex: 0.3;
+          flex: 0.3;
+  border-radius: 20px !important;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.profile__card .profileCard__avatar {
+  padding: 30px;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
+
+.profile__card .profileCard__avatar .MuiAvatar-root {
+  width: 100px;
+  height: 100px;
+}
+
+.profile__card .profileCard__info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px 5px 0 10px;
+}
+
+.profile__card .profileCard__info svg {
+  color: #ff385c;
+}
+
+.profile__card .profileCard__info p {
+  word-wrap: break-word;
+  word-break: keep-all;
+  padding-left: 10px;
+  color: #555;
+}
+
+.profile__card .profileCard__info:last-child {
+  padding-bottom: 1.5rem;
+}
+
+.profile__info {
+  -webkit-box-flex: 0.65;
+      -ms-flex: 0.65;
+          flex: 0.65;
+}
+
+.profile__info .profileInfo__basic .profileInfo__name {
+  font-size: xx-large;
+  font-weight: 500;
+  color: #222;
+}
+
+.profile__info .profileInfo__basic .profileInfo__join {
+  padding-top: 5px;
+  color: #717171;
+}
+
+.profile__info .profileInfo__about-description {
+  padding-top: 10px;
+  color: #555;
+}
+
+.profile__info .title {
+  font-size: x-large;
+  font-weight: 500;
+  color: #222;
+}
+
+hr {
+  margin: 20px 0;
+  border-top: #b0b0b0;
+}
+
+.aws-btn {
+  padding-top: 1rem;
+  margin-bottom: 3rem;
+  --slider-height-percentage: 60%;
+  --slider-transition-duration: 200ms;
+  --organic-arrow-thickness: 5px;
+  --organic-arrow-border-radius: 5px;
+  --organic-arrow-height: 1rem;
+  --organic-arrow-color: #fff;
+  --control-button-width: 5%;
+  --control-button-height: 25%;
+  --control-button-background: transparent;
+  --control-bullet-color: #b0b0b0;
+  --control-bullet-active-color: #ff385c;
+  --loader-bar-color: #ff385c;
+  --loader-bar-height: 6px;
+}
+
+.awssld__content {
+  -webkit-box-align: end !important;
+      -ms-flex-align: end !important;
+          align-items: flex-end !important;
+}
+
+.listing__caption {
+  z-index: 999;
+  padding: 1rem;
+}
+
+.listing__caption p {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: 500;
+}
+/*# sourceMappingURL=Profile.css.map */

@@ -1,6 +1,6 @@
 import React from 'react'
 import './style/Header.css'
-import { Avatar, Button, Menu, MenuItem } from '@material-ui/core'
+import { Avatar, Button, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -32,15 +32,29 @@ function Header() {
 				</Button>
 				<Button
 					onClick={() => {
-						history.push('/signup')
+						history.push('/login')
 					}}
 					variant='text'>
 					Become a host
 				</Button>
-				<Avatar aria-controls='menu' aria-haspopup='true' onClick={handleClick} />
+				<IconButton aria-controls='menu' aria-haspopup='true' onClick={handleClick}>
+					<Avatar />
+				</IconButton>
 				<Menu id='menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-					<MenuItem onClick={handleClose}>Profile</MenuItem>
-					<MenuItem onClick={handleClose}>My account</MenuItem>
+					<MenuItem
+						onClick={() => {
+							history.push('/profile')
+							setAnchorEl(null)
+						}}>
+						Profile
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							history.push('/account')
+							setAnchorEl(null)
+						}}>
+						My account
+					</MenuItem>
 					<MenuItem onClick={handleClose}>Logout</MenuItem>
 				</Menu>
 			</div>

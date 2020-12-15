@@ -1,0 +1,17 @@
+.searchPage{
+	min-width: 700px;
+}
+
+.searchPage__info {
+	padding: 20px;
+	> h1 {
+		margin-bottom: 30px;
+		font-weight: 500;
+	}
+
+	> button {
+		border-radius: 30px;
+		text-transform: inherit;
+        margin: 5px;
+	}
+}

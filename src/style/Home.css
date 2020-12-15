@@ -1,3 +1,7 @@
+.home {
+  min-width: 700px;
+}
+
 .home__section {
   display: -webkit-box;
   display: -ms-flexbox;

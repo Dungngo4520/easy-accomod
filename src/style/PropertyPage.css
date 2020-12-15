@@ -1,0 +1,292 @@
+.property__page {
+  min-width: 700px;
+  width: 50%;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  margin: auto;
+}
+
+.propertyPage__header {
+  padding: 1rem 0;
+}
+
+.propertyPage__title {
+  font-weight: 600;
+}
+
+.propertyPage__subtitle {
+  padding-top: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.propertyPage__subtitleRight {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.propertyPage__subtitleRight > * {
+  padding-right: 10px;
+}
+
+.property__rate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.property__rate .property__star {
+  padding-right: 5px;
+  color: #ff385c;
+}
+
+.propertyPage__subtitleLeft .MuiButton-root {
+  -webkit-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+
+.propertyPage__subtitleLeft:hover .MuiButton-root {
+  color: #ff385c;
+}
+
+.propertyPage__gallery {
+  width: auto;
+  min-width: 700px;
+}
+
+.propertyPage__info {
+  margin-top: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.propertyPage__info .propertyInfo__left {
+  -webkit-box-flex: 0.7;
+      -ms-flex: 0.7;
+          flex: 0.7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.propertyPage__info .propertyInfo__left .propertyInfo__title {
+  font-weight: 500;
+}
+
+.propertyPage__info .propertyInfo__left .propertyInfo__condition {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: large;
+}
+
+.propertyPage__info .propertyInfo__left .propertyInfo__condition > * {
+  padding: 3px;
+}
+
+.propertyPage__info .propertyInfo__owner {
+  -webkit-box-flex: 0.3;
+      -ms-flex: 0.3;
+          flex: 0.3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.propertyPage__info .propertyInfo__owner p {
+  font-weight: 500;
+  font-size: larger;
+  padding-right: 10px;
+}
+
+.propertyPage__info .propertyInfo__owner .MuiAvatar-root {
+  width: 70px;
+  height: 70px;
+}
+
+.propertyInfo__description {
+  font-size: 17px;
+}
+
+.propertyInfo__amenities > p {
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.propertyInfo__amenities .property__amenity {
+  padding-top: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.propertyInfo__amenities .property__amenity > * {
+  padding-right: 10px;
+}
+
+.propertyInfo__amenities div:nth-child(6) > svg {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  margin-left: -5px;
+  margin-top: 5px;
+}
+
+.propertyInfo__review .property__rate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: x-large;
+  font-weight: 600;
+}
+
+.propertyInfo__review .propertyInfoReview__comment .propertyInfoReview__commentor {
+  padding: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.propertyInfo__review .propertyInfoReview__comment .propertyInfoReview__commentor .MuiAvatar-root {
+  width: 50px;
+  height: 50px;
+}
+
+.propertyInfo__review .propertyInfoReview__comment .propertyInfoReview__commentor-info {
+  padding-left: 10px;
+}
+
+.propertyInfo__review .propertyInfoReview__comment .propertyInfoReview__commentor-info .propertyInfoReview__commentor-name {
+  font-weight: 500;
+}
+
+.propertyInfo__review .propertyInfoReview__comment .propertyInfoReview__commentor-info .propertyInfoReview__commentor-date {
+  color: #717171;
+}
+
+.property__owner > p {
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.property__owner .propertyOwner__information {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 0;
+}
+
+.property__owner .propertyOwner__information .MuiAvatar-root {
+  width: 70px;
+  height: 70px;
+}
+
+.property__owner .propertyOwner__information .propertyOwner__info {
+  padding-left: 10px;
+}
+
+.property__owner .propertyOwner__information .propertyOwner__info .propertyOwner__name {
+  font-size: larger;
+  font-weight: 500;
+}
+
+.property__owner .propertyOwner__information .propertyOwner__info .propertyOwner__join {
+  padding-top: 5px;
+  color: #717171;
+}
+
+.property__owner .propertyOwner__description q {
+  margin-left: 4ch;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #555;
+}
+
+.propertyInfo__check {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 999;
+  width: 100%;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.propertyInfo__check p {
+  padding: 10px;
+  font-size: x-large;
+  font-weight: 600;
+}
+
+.propertyInfo__check .propertyInfoCheck__button {
+  padding: 10px;
+}
+
+.propertyInfo__check .propertyInfoCheck__button .MuiButton-root {
+  font-weight: 600;
+  padding: 10px;
+  color: white;
+  background-color: #ff385c;
+  text-transform: inherit;
+}
+
+.aws-btn {
+  --slider-height-percentage: 60%;
+  --slider-transition-duration: 400ms;
+  --organic-arrow-thickness: 5px;
+  --organic-arrow-border-radius: 5px;
+  --organic-arrow-height: 1rem;
+  --organic-arrow-color: #fff;
+  --control-button-width: 5%;
+  --control-button-height: 25%;
+  --control-button-background: transparent;
+  --control-bullet-color: #b0b0b0;
+  --control-bullet-active-color: #ff385c;
+  --loader-bar-color: #ff385c;
+  --loader-bar-height: 6px;
+}
+
+.not-available {
+  text-decoration: line-through;
+}
+
+.not-available svg {
+  color: #b0b0b0;
+}
+
+hr {
+  margin: 20px 0;
+  border-top: #b0b0b0;
+}
+/*# sourceMappingURL=PropertyPage.css.map */

@@ -1,0 +1,107 @@
+.profile {
+	padding-top: 3rem;
+	min-width: 700px;
+	width: 50%;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.profile__card {
+	flex: 0.3;
+	border-radius: 20px !important;
+    height: fit-content;
+	.profileCard__avatar {
+		padding: 30px;
+		display: grid;
+		place-content: center;
+		.MuiAvatar-root {
+			width: 100px;
+			height: 100px;
+		}
+	}
+
+	.profileCard__info {
+		display: flex;
+		align-items: center;
+		padding: 5px 5px 0 10px;
+		svg {
+			color: #ff385c;
+		}
+
+		p {
+			word-wrap: break-word;
+			word-break: keep-all;
+			padding-left: 10px;
+			color: #555;
+		}
+		&:last-child {
+			padding-bottom: 1.5rem;
+		}
+	}
+}
+
+.profile__info {
+	flex: 0.65;
+	.profileInfo__basic {
+		.profileInfo__name {
+			font-size: xx-large;
+			font-weight: 500;
+			color: #222;
+		}
+		.profileInfo__join {
+			padding-top: 5px;
+			color: #717171;
+		}
+	}
+
+	.profileInfo__about {
+		&-description {
+			padding-top: 10px;
+			color: #555;
+		}
+	}
+
+	.title {
+		font-size: x-large;
+		font-weight: 500;
+		color: #222;
+	}
+}
+
+hr {
+	margin: 20px 0;
+	border-top: #b0b0b0;
+}
+
+.aws-btn {
+	padding-top: 1rem;
+	margin-bottom: 3rem;
+	--slider-height-percentage: 60%;
+	--slider-transition-duration: 200ms;
+	--organic-arrow-thickness: 5px;
+	--organic-arrow-border-radius: 5px;
+	--organic-arrow-height: 1rem;
+	--organic-arrow-color: #fff;
+	--control-button-width: 5%;
+	--control-button-height: 25%;
+	--control-button-background: transparent;
+	--control-bullet-color: #b0b0b0;
+	--control-bullet-active-color: #ff385c;
+	--loader-bar-color: #ff385c;
+	--loader-bar-height: 6px;
+}
+
+.awssld__content {
+	align-items: flex-end !important;
+}
+
+.listing__caption {
+	z-index: 999;
+	padding: 1rem;
+	p {
+		background-color: rgba($color: black, $alpha: 0.5);
+		color: white;
+		font-weight: 500;
+	}
+}
