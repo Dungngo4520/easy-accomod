@@ -46,7 +46,7 @@
 
 .property__rate .property__star {
   padding-right: 5px;
-  color: #ff385c;
+  color: #dc004e;
 }
 
 .propertyPage__subtitleLeft .MuiButton-root {
@@ -55,7 +55,7 @@
 }
 
 .propertyPage__subtitleLeft:hover .MuiButton-root {
-  color: #ff385c;
+  color: #dc004e;
 }
 
 .propertyPage__gallery {
@@ -257,7 +257,7 @@
   font-weight: 600;
   padding: 10px;
   color: white;
-  background-color: #ff385c;
+  background-color: #dc004e;
   text-transform: inherit;
 }
 
@@ -272,8 +272,8 @@
   --control-button-height: 25%;
   --control-button-background: transparent;
   --control-bullet-color: #b0b0b0;
-  --control-bullet-active-color: #ff385c;
-  --loader-bar-color: #ff385c;
+  --control-bullet-active-color: #dc004e;
+  --loader-bar-color: #dc004e;
   --loader-bar-height: 6px;
 }
 

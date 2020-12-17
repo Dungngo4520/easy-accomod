@@ -1,0 +1,84 @@
+.account {
+	min-width: 700px;
+	width: 50%;
+	height: 80vh;
+	display: flex;
+	margin: 2rem auto;
+}
+
+.account__navbar {
+	flex: 0.3;
+
+	.navbar__item {
+		font-size: large;
+		font-weight: 500;
+		padding: 1.5rem 2rem;
+		transition: all 200ms ease-in-out;
+		cursor: pointer;
+		text-transform: capitalize !important;
+		width: 100%;
+		justify-content: unset !important;
+
+		&:hover {
+			background-color: #eee;
+			color: black;
+		}
+
+		.MuiBadge-badge {
+			font-size: 0.5rem;
+			height: 15px;
+			min-width: 15px;
+		}
+	}
+
+	.active {
+		background-color: #dc004e;
+		color: white;
+		font-weight: 700;
+
+		&:hover {
+			background-color: #dc004e;
+			color: white;
+		}
+
+		.MuiBadge-badge {
+			background-color: white;
+			color: #dc004e;
+		}
+	}
+}
+
+.account__content {
+	padding: 1rem 2rem;
+	flex: 0.7;
+}
+
+.info__label {
+	font-size: xx-large;
+	font-weight: 600;
+	text-transform: capitalize;
+	padding-bottom: 2rem;
+}
+
+.personal__info {
+	.personalInfo__section {
+		.infoSection__field {
+			font-weight: 500;
+			padding: 2px 0;
+		}
+		.infoSection__content {
+			padding: 2px 0;
+		}
+	}
+}
+
+.notification {
+	.unread {
+		font-weight: 600;
+	}
+}
+
+hr {
+	margin: 1rem 0;
+	border-top: #b0b0b0;
+}

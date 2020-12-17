@@ -1,0 +1,28 @@
+.signup {
+	margin-top: 8rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form__selection{
+    width: 100%;
+    margin: 1rem;
+    flex: 1;
+}
+
+.signup__form {
+	width: 100%;
+	margin-top: 3rem;
+}
+
+.signup__btn {
+    margin-top: 2rem !important;
+    padding: 0.5rem;
+}
+
+.form__redirect{
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+}

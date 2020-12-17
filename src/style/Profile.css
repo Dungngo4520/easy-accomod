@@ -44,7 +44,7 @@
 }
 
 .profile__card .profileCard__info svg {
-  color: #ff385c;
+  color: #dc004e;
 }
 
 .profile__card .profileCard__info p {
@@ -104,8 +104,8 @@ hr {
   --control-button-height: 25%;
   --control-button-background: transparent;
   --control-bullet-color: #b0b0b0;
-  --control-bullet-active-color: #ff385c;
-  --loader-bar-color: #ff385c;
+  --control-bullet-active-color: #dc004e;
+  --loader-bar-color: #dc004e;
   --loader-bar-height: 6px;
 }
 

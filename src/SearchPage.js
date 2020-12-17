@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 function SearchPage() {
 	const searchProperty = [
 		{
-			key: 1,
+			id: 1,
 			img: 'https://a0.muscache.com/im/pictures/b277a9ff-c847-44b5-989b-8384c0de2c32.jpg',
 			location: 'Hoa Lư, Ninh Bình, Vietnam',
 			title: 'Private room in bed and breakfast hosted by Ninh Binh Mountain Side',
@@ -30,7 +30,7 @@ function SearchPage() {
 			</div>
 			{searchProperty.map((item) => (
 				<SearchResult
-					key={item.key}
+					id={item.id}
 					img={item.img}
 					location={item.location}
 					title={item.title}
@@ -38,7 +38,7 @@ function SearchPage() {
 					star={item.star}
 					price={item.price}
 					onClick={() => {
-						history.push(`/properties/${item.key}`)
+						history.push(`/properties/${item.id}`)
 					}}
 				/>
 			))}

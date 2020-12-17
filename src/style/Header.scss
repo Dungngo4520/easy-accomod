@@ -8,17 +8,17 @@
 	background-color: white;
 	z-index: 100;
 	width: 100%;
-	padding-top: 1%;
-	padding-bottom: 1%;
 	box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px !important;
 }
 
 .header__logo {
 	object-fit: contain;
+	font-weight: bold;
+	font-size: 2rem;
 	height: 50px;
-	margin-left: 20px;
+	padding: 1rem 2.5rem;
 	text-decoration: none;
-	color: black;
+	color: #dc004e;
 }
 
 .header__center {
@@ -45,13 +45,20 @@
 	justify-content: space-between;
 	margin-right: 40px;
 
-	> * {
+	button {
 		margin-left: 20px;
 	}
+
+	.MuiButton-text:nth-of-type(2) {
+		width: 10rem;
+	}
+
 	.MuiButton-root {
 		transition: all 250ms ease-in-out;
 		&:hover {
-			color: #ff385c;
+			background-color: transparent;
+			color: #dc004e;
+			font-weight: bold;
 		}
 	}
 }

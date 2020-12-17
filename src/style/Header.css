@@ -15,8 +15,6 @@
   background-color: white;
   z-index: 100;
   width: 100%;
-  padding-top: 1%;
-  padding-bottom: 1%;
   -webkit-box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px !important;
           box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px !important;
 }
@@ -24,10 +22,12 @@
 .header__logo {
   -o-object-fit: contain;
      object-fit: contain;
+  font-weight: bold;
+  font-size: 2rem;
   height: 50px;
-  margin-left: 20px;
+  padding: 1rem 2.5rem;
   text-decoration: none;
-  color: black;
+  color: #dc004e;
 }
 
 .header__center {
@@ -68,8 +68,12 @@
   margin-right: 40px;
 }
 
-.header__right > * {
+.header__right button {
   margin-left: 20px;
+}
+
+.header__right .MuiButton-text:nth-of-type(2) {
+  width: 10rem;
 }
 
 .header__right .MuiButton-root {
@@ -78,6 +82,8 @@
 }
 
 .header__right .MuiButton-root:hover {
-  color: #ff385c;
+  background-color: transparent;
+  color: #dc004e;
+  font-weight: bold;
 }
 /*# sourceMappingURL=Header.css.map */
