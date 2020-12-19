@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AwesomeSlider from 'react-awesome-slider'
 import StarIcon from '@material-ui/icons/Star'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
@@ -12,11 +12,16 @@ import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
 import WbSunnyIcon from '@material-ui/icons/WbSunny'
 import OpacityIcon from '@material-ui/icons/Opacity'
 import DevicesOtherIcon from '@material-ui/icons/DevicesOther'
+import { useHistory } from 'react-router-dom'
 
 import 'react-awesome-slider/dist/styles.css'
-import './style/PropertyPage.css'
+import { AuthContext } from './Auth'
+import '../style/PropertyPage.css'
 
 function PropertyPage() {
+	const { currentUser } = useContext(AuthContext)
+	const history = useHistory()
+
 	const images = [
 		{
 			url: 'https://a0.muscache.com/im/pictures/b277a9ff-c847-44b5-989b-8384c0de2c32.jpg?im_w=720',
@@ -34,6 +39,8 @@ function PropertyPage() {
 			url: 'https://a0.muscache.com/im/pictures/869e432f-d1e3-48a0-8bfe-996c5e734313.jpg?im_w=720',
 		},
 	]
+
+	const handleClick = () => {}
 
 	return (
 		<div className='property__page'>
@@ -178,11 +185,11 @@ function PropertyPage() {
 					</q>
 				</div>
 			</div>
-			<br/>
+			<br />
 			<Paper elevation={5} className='propertyInfo__check'>
 				<p>15$/month</p>
 				<div className='propertyInfoCheck__button'>
-					<Button>Rent this property</Button>
+					<Button onClick={handleClick}>Rent this property</Button>
 				</div>
 			</Paper>
 		</div>

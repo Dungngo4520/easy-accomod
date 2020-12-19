@@ -1,19 +1,20 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Home from './Home'
-import Header from './Header'
-import SearchPage from './SearchPage'
-import PageNotFound from './PageNotFound'
-import Profile from './Profile'
-import Account from './Account'
-import SignIn from './SignIn'
-import PropertyPage from './PropertyPage'
-import Footer from './Footer'
-import ScrollToTop from './ScrollToTop'
-import SignUp from './SignUp'
-import PrivateRoute from './PrivateRoute'
-import { AuthProvider } from './Auth'
+import Home from './components/Home'
+import Header from './components/Header'
+import SearchPage from './components/SearchPage'
+import PageNotFound from './components/PageNotFound'
+import Profile from './components/Profile'
+import Account from './components/Account'
+import SignIn from './components/SignIn'
+import PropertyPage from './components/PropertyPage'
+import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
+import SignUp from './components/SignUp'
+import ForgotPassword from './components/ForgotPassword'
+import PrivateRoute from './components/PrivateRoute'
+import { AuthProvider } from './components/Auth'
 
 function App() {
 	return (
@@ -23,11 +24,12 @@ function App() {
 					<ScrollToTop />
 					<Header />
 					<Switch>
-						<Route path='/properties/:propertyId' component={PropertyPage} />
-						<Route path='/signup' component={SignUp} />
-						<Route path='/signin' component={SignIn} />
+						<PrivateRoute path='/properties/:propertyId' component={PropertyPage} />
 						<PrivateRoute path='/account' component={Account} />
 						<PrivateRoute path='/profile' component={Profile} />
+						<Route path='/signup' component={SignUp} />
+						<Route path='/signin' component={SignIn} />
+						<Route path='/forgot' component={ForgotPassword} />
 						<Route path='/search' component={SearchPage} />
 						<Route exact path='/' component={Home} />
 						<Route path='*' component={PageNotFound} />

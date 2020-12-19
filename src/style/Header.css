@@ -72,10 +72,6 @@
   margin-left: 20px;
 }
 
-.header__right .MuiButton-text:nth-of-type(2) {
-  width: 10rem;
-}
-
 .header__right .MuiButton-root {
   -webkit-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;

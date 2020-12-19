@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core'
 import React from 'react'
-import './style/SearchPage.css'
+import '../style/SearchPage.css'
 import SearchResult from './SearchResult'
 import { useHistory } from 'react-router-dom'
 

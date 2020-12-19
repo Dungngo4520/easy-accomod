@@ -1,7 +1,7 @@
 import React from 'react'
-import './style/Home.css'
 import Banner from './Banner'
 import Card from './Card'
+import '../style/Home.css'
 
 function Home() {
 	return (

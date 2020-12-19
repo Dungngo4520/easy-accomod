@@ -5,7 +5,7 @@ import PhoneIcon from '@material-ui/icons/Phone'
 import EmailIcon from '@material-ui/icons/Email'
 import AwesomeSlider from 'react-awesome-slider'
 import { useHistory } from 'react-router-dom'
-import './style/Profile.css'
+import '../style/Profile.css'
 
 function Profile() {
 	const history = useHistory()

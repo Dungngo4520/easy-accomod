@@ -1,6 +1,6 @@
 import { Badge, Button, Paper } from '@material-ui/core'
 import React, { useState } from 'react'
-import './style/Account.css'
+import '../style/Account.css'
 
 function Account() {
 	const [selection, setSelection] = useState(1)

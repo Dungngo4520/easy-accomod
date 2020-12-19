@@ -1,21 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-throw-literal */
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
-import MuiAlert from '@material-ui/lab/Alert'
-import { Paper, Snackbar, Tab, Tabs } from '@material-ui/core'
+import { Paper, Tab, Tabs } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import './style/SignUp.css'
-import app from './firebase'
+import '../style/SignUp.css'
+import { db } from '../firebase'
+import { AuthContext } from './Auth'
+import firebase from 'firebase'
 
 export default function SignUp() {
 	const history = useHistory()
 
-	const [role, setRole] = useState('customer')
+	const { signUp, signUpAsHost, showError } = useContext(AuthContext)
+	const [selection, setSelection] = useState('customer')
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
 	const [address, setAddress] = useState('')
@@ -24,66 +27,92 @@ export default function SignUp() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
-	const [error, setError] = useState('')
-	const [loading, setLoading] = useState(false)
-	const [open, setOpen] = useState(true)
 
-	const handleChange = (event, value) => {
-		setRole(value)
+	const validate = () => {
+		const regexVietnamese = /\d|[^\w\saAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]/
+
+		if (lname === '' || fname === '') {
+			throw 'Name is required'
+		} else if (regexVietnamese.test(lname) || regexVietnamese.test(fname)) {
+			throw 'Name is badly formatted'
+		}
+		if (selection === 'host') {
+			if (address === '') {
+				throw 'Address is required'
+			}
+			if (id === '') {
+				throw 'ID number is required'
+			} else if (/\D/.test(id) || (id.length !== 9 && id.length !== 12)) {
+				throw 'ID number is badly formatted'
+			}
+		}
+		if (phone === '') {
+			throw 'Phone number is required'
+		} else if (/\D/.test(phone) || phone.length !== 10) {
+			throw 'Phone number is badly formatted'
+		}
+		if (email === '') {
+			throw 'Email is required'
+		}
+		if (password !== confirmPassword) {
+			throw 'Password does not match'
+		}
 	}
 
 	const handleSignUp = useCallback(
 		async (event) => {
-			const regexVietnamese = /\d|[^\w\saAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]/
-
 			event.preventDefault()
-
 			try {
-				if (lname === '' || fname === '') {
-					throw 'Name is required'
-				} else if (regexVietnamese.test(lname) || regexVietnamese.test(fname)) {
-					throw 'Name is badly formatted'
-				}
-				if (role === 'host') {
-					if (address === '') {
-						throw 'Address is required'
-					}
-					if (id === '') {
-						throw 'ID number is required'
-					} else if (/\D/.test(id) || (id.length !== 9 && id.length !== 12)) {
-						throw 'ID number is badly formatted'
-					}
-				}
-				if (phone === '') {
-					throw 'Phone number is required'
-				} else if (/\D/.test(phone) || phone.length !== 10) {
-					throw 'Phone number is badly formatted'
-				}
-				if (email === '') {
-					throw 'Email is required'
-				}
-				if (password !== confirmPassword) {
-					throw 'Password does not match'
-				}
-				setError('')
-				setLoading(true)
-				await app.auth().createUserWithEmailAndPassword(email, password)
-				history.push('/')
+				validate()
+				await signUp(email, password)
+				await db.collection('users').add({
+					email: email,
+					firstname: fname,
+					lastname: lname,
+					phone: phone,
+				})
+				showError('User is created. Redirect to Home', true)
+				setTimeout(() => {
+					history.push('/')
+				}, 1000)
 			} catch (error) {
-				setError(typeof error === 'object' ? error.message : error)
-				setOpen(true)
+				showError(typeof error === 'object' ? error.message : error, false)
 			}
-			setLoading(false)
 		},
-		[address, confirmPassword, email, fname, history, id, lname, password, phone, role]
+		[email, history, password, showError, signUp, validate]
 	)
 
-	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return
-		}
+	const handleSignUpAsHost = useCallback(
+		async (event) => {
+			event.preventDefault()
+			try {
+				validate()
+				await signUpAsHost(email, password)
+				await db.collection('owners').add({
+					about: '',
+					address: address,
+					dateofbirth: firebase.firestore.FieldValue.serverTimestamp(),
+					email: email,
+					firstname: fname,
+					lastname: lname,
+					govid: id,
+					male: true,
+					phone: phone,
+					verified: false,
+				})
+				showError('User is created. Redirecting to Home', true)
+				setTimeout(() => {
+					history.push('/')
+				}, 1000)
+			} catch (error) {
+				showError(typeof error === 'object' ? error.message : error, false)
+			}
+		},
+		[email, history, password, showError, signUp, validate]
+	)
 
-		setOpen(false)
+	const handleChange = (event, value) => {
+		setSelection(value)
 	}
 
 	return (
@@ -94,7 +123,7 @@ export default function SignUp() {
 				</Typography>
 				<Paper className='form__selection'>
 					<Tabs
-						value={role}
+						value={selection}
 						onChange={handleChange}
 						variant='fullWidth'
 						indicatorColor='secondary'
@@ -137,7 +166,7 @@ export default function SignUp() {
 								onChange={(e) => [setLname(e.target.value)]}
 							/>
 						</Grid>
-						{role === 'host' ? (
+						{selection === 'host' ? (
 							<>
 								<Grid item xs={12}>
 									<TextField
@@ -242,12 +271,11 @@ export default function SignUp() {
 						</Grid>
 					</Grid>
 					<Button
-						disabled={loading}
 						fullWidth
 						variant='contained'
 						color='secondary'
 						className='signup__btn'
-						onClick={handleSignUp}>
+						onClick={selection === 'customer' ? handleSignUp : handleSignUpAsHost}>
 						Sign Up
 					</Button>
 					<Typography className='form__redirect' component='h1' variant='h5'>
@@ -262,15 +290,6 @@ export default function SignUp() {
 					</Typography>
 				</form>
 			</div>
-			{error !== '' ? (
-				<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-					<MuiAlert elevation={6} severity='error'>
-						{error}
-					</MuiAlert>
-				</Snackbar>
-			) : (
-				''
-			)}
 		</Container>
 	)
 }
