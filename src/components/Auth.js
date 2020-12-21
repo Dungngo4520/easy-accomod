@@ -56,7 +56,9 @@ export const AuthProvider = ({ children }) => {
 	async function signIn(email, password) {
 		if ((await db.collection('users').where('email', '==', email).get()).docs.length === 1) {
 			saveToLocalStorage('role', 'user')
-		} else throw 'This account does not exist or has another role!'
+		} else {
+			throw 'This account does not exist or has another role!'
+		}
 		db.collection(`users`)
 			.where('email', '==', email)
 			.onSnapshot((snapshot) =>
@@ -70,6 +72,9 @@ export const AuthProvider = ({ children }) => {
 		return auth.signInWithEmailAndPassword(email, password)
 	}
 	async function signInAsHost(email, password) {
+		if ((await db.collection('users').where('email', '==', email).get()).docs.length === 1) {
+			throw 'This account does not exist or has another role!'
+		}
 		const checkRole =
 			(await db.collection('admins').where('email', '==', email).get()).docs.length === 1
 				? 'admin'

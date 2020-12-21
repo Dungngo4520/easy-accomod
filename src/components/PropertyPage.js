@@ -52,7 +52,7 @@ function PropertyPage(id) {
 				}
 			} catch (e) {}
 		}
-		subscribe()
+		return subscribe()
 	}, [id, propertyData])
 
 	useEffect(() => {
@@ -75,7 +75,7 @@ function PropertyPage(id) {
 				}
 			})
 		}
-		subscribe()
+		return subscribe()
 	}, [favorites, id.match.params.propertyId, userData.id])
 
 	const handleRentClick = () => {
@@ -231,12 +231,16 @@ function PropertyPage(id) {
 				</div>
 			</div>
 			<br />
-			<Paper elevation={5} className='propertyInfo__check'>
-				<p>{propertyData.price}$/month</p>
-				<div className='propertyInfoCheck__button'>
-					<Button onClick={handleRentClick}>Rent this property</Button>
-				</div>
-			</Paper>
+			{role === 'user' ? (
+				<Paper elevation={5} className='propertyInfo__check'>
+					<p>{propertyData.price}$/month</p>
+					<div className='propertyInfoCheck__button'>
+						<Button onClick={handleRentClick}>Rent this property</Button>
+					</div>
+				</Paper>
+			) : (
+				''
+			)}
 		</div>
 	) : (
 		<Redirect to='/404' />

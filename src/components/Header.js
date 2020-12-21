@@ -50,7 +50,7 @@ function Header() {
 							{userData ? `${userData.firstname} ${userData.lastname}` : ''}
 						</Typography>
 						<IconButton color='secondary' aria-controls='menu' aria-haspopup='true' onClick={handleClick}>
-							<Avatar src={userData.photoURL} />
+							<Avatar src={userData?.photoURL} />
 						</IconButton>
 					</div>
 				) : (

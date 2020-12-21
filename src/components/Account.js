@@ -102,7 +102,6 @@ function Account() {
 	}
 
 	const handleChangeClose = () => {
-		console.log(formData)
 		setChange(false)
 	}
 

@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, MenuItem, Slider, TextField, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import '../style/SearchPage.css'
 import SearchResult from './SearchResult'
@@ -7,32 +7,208 @@ import { db } from '../firebase'
 function SearchPage() {
 	const history = useHistory()
 	const [properties, setProperties] = useState([])
+	const [maxPrice, setMaxPrice] = useState(0)
+	const [maxArea, setMaxArea] = useState(0)
+	const [typeFilter, setTypeFilter] = useState('All')
+	const [priceFilter, setPriceFilter] = useState([5, 15])
+	const [areaFilter, setAreaFilter] = useState([10, 50])
+	const [locationFilter, setLocationFilter] = useState('')
+	const [nearbyFilter, setNearbyFilter] = useState('')
+	const [other, setOther] = useState({})
+	const [dataFiltered, setDataFiltered] = useState([])
+	const types = [
+		{ value: 'All', label: 'All' },
+		{ value: 'Motel', label: 'Motel' },
+		{ value: 'Mini apartment', label: 'Mini apartment' },
+		{ value: 'Wholehouse', label: 'Wholehouse' },
+		{ value: 'Apartment', label: 'Apartment' },
+	]
 
 	useEffect(() => {
-		db.collection('properties')
-			.get()
-			.then((data) =>
+		const loadProperties = async () => {
+			await db.collection('properties').onSnapshot((snapshot) => {
 				setProperties(
-					data.docs.map((doc) => {
+					snapshot.docs.map((doc) => {
 						return { ...doc.data(), id: doc.id }
 					})
 				)
-			)
+			})
+			await db
+				.collection('properties')
+				.orderBy('price', 'desc')
+				.limit(1)
+				.onSnapshot((snapshot) => setMaxPrice(snapshot.docs[0].data().price))
+
+			await db
+				.collection('properties')
+				.orderBy('price', 'desc')
+				.limit(1)
+				.onSnapshot((snapshot) => setMaxArea(snapshot.docs[0].data().area))
+		}
+		return loadProperties
 	}, [])
+
+	useEffect(() => {
+		setDataFiltered(properties)
+	}, [properties])
 
 	return (
 		<div className='searchPage'>
 			<div className='searchPage__info'>
 				<h1>Stays nearby</h1>
-				<Button variant='outlined'>Location</Button>
-				<Button variant='outlined'>Around</Button>
-				<Button variant='outlined'>Price</Button>
-				<Button variant='outlined'>Type</Button>
-				<Button variant='outlined'>Area</Button>
-				<Button variant='outlined'>More filters</Button>
+				<div className='search__filters'>
+					<div className='filters'>
+						<Typography>Location</Typography>
+						<TextField
+							color='secondary'
+							size='small'
+							value={locationFilter}
+							onChange={(e) => {
+								setLocationFilter(e.target.value)
+								setDataFiltered(
+									properties
+										.filter((item) => item.price >= priceFilter[0] && item.price <= priceFilter[1])
+										.filter((item) => item.area >= areaFilter[0] && item.area <= areaFilter[1])
+										.filter((item) =>
+											new RegExp(e.target.value === '' ? '.' : e.target.value, 'gi').test(
+												item.address
+											)
+										)
+										.filter((item) =>
+											new RegExp(nearbyFilter === '' ? '.' : nearbyFilter, 'gi').test(item.nearby)
+										)
+										.filter((item) => (typeFilter === 'All' ? true : item.type === typeFilter))
+								)
+							}}
+						/>
+					</div>
+					<div className='filters'>
+						<Typography>Nearby</Typography>
+						<TextField
+							color='secondary'
+							size='small'
+							value={nearbyFilter}
+							onChange={(e) => {
+								setNearbyFilter(e.target.value)
+								setDataFiltered(
+									properties
+										.filter((item) => item.price >= priceFilter[0] && item.price <= priceFilter[1])
+										.filter((item) => item.area >= areaFilter[0] && item.area <= areaFilter[1])
+										.filter((item) =>
+											new RegExp(locationFilter === '' ? '.' : locationFilter, 'gi').test(
+												item.address
+											)
+										)
+										.filter((item) =>
+											new RegExp(e.target.value === '' ? '.' : e.target.value, 'gi').test(
+												item.nearby
+											)
+										)
+										.filter((item) => (typeFilter === 'All' ? true : item.type === typeFilter))
+								)
+							}}
+						/>
+					</div>
+					<div className='filters'>
+						<Typography>Type</Typography>
+						<TextField
+							color='secondary'
+							select
+							value={typeFilter}
+							onChange={(e) => {
+								setTypeFilter(e.target.value)
+								setDataFiltered(
+									properties
+										.filter((item) => item.price >= priceFilter[0] && item.price <= priceFilter[1])
+										.filter((item) => item.area >= areaFilter[0] && item.area <= areaFilter[1])
+										.filter((item) =>
+											new RegExp(locationFilter === '' ? '.' : locationFilter, 'gi').test(
+												item.address
+											)
+										)
+										.filter((item) =>
+											new RegExp(nearbyFilter === '' ? '.' : nearbyFilter, 'gi').test(item.nearby)
+										)
+										.filter((item) =>
+											e.target.value === 'All' ? true : item.type === e.target.value
+										)
+								)
+							}}
+							defaultValue={types[0].value}>
+							{types.map((option) => (
+								<MenuItem key={option.value} value={option.value}>
+									{option.label}
+								</MenuItem>
+							))}
+						</TextField>
+					</div>
+					<div className='filters'>
+						<Typography>Price</Typography>
+						<Slider
+							color='secondary'
+							value={priceFilter}
+							max={maxPrice}
+							min={0}
+							onChange={(e, newValue) => {
+								setPriceFilter(newValue)
+								setDataFiltered(
+									properties
+										.filter((item) => item.price >= newValue[0] && item.price <= newValue[1])
+										.filter((item) => item.area >= areaFilter[0] && item.area <= areaFilter[1])
+										.filter((item) =>
+											new RegExp(locationFilter === '' ? '.' : locationFilter, 'gi').test(
+												item.address
+											)
+										)
+										.filter((item) =>
+											new RegExp(nearbyFilter === '' ? '.' : nearbyFilter, 'gi').test(item.nearby)
+										)
+										.filter((item) => (typeFilter === 'All' ? true : item.type === typeFilter))
+								)
+							}}
+							valueLabelDisplay='auto'
+							aria-labelledby='range-slider'
+							getAriaValueText={(value) => {
+								return `${value}$`
+							}}
+						/>
+					</div>
+					<div className='filters'>
+						<Typography>Area</Typography>
+						<Slider
+							color='secondary'
+							value={areaFilter}
+							max={maxArea}
+							min={0}
+							onChange={(e, newValue) => {
+								setAreaFilter(newValue)
+								setDataFiltered(
+									properties
+										.filter((item) => item.price >= priceFilter[0] && item.price <= priceFilter[1])
+										.filter((item) => item.area >= newValue[0] && item.area <= newValue[1])
+										.filter((item) =>
+											new RegExp(locationFilter === '' ? '.' : locationFilter, 'gi').test(
+												item.address
+											)
+										)
+										.filter((item) =>
+											new RegExp(nearbyFilter === '' ? '.' : nearbyFilter, 'gi').test(item.nearby)
+										)
+										.filter((item) => (typeFilter === 'All' ? true : item.type === typeFilter))
+								)
+							}}
+							valueLabelDisplay='auto'
+							aria-labelledby='range-slider'
+							getAriaValueText={(value) => {
+								return `${value}$`
+							}}
+						/>
+					</div>
+					{/* <Button>More filters</Button> */}
+				</div>
 			</div>
 
-			{properties
+			{dataFiltered
 				.filter((item) => {
 					return item.status === 'verified' && item.showuntil.seconds >= new Date().getTime() / 1000
 				})
