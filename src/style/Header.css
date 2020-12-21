@@ -68,10 +68,6 @@
   margin-right: 40px;
 }
 
-.header__right button {
-  margin-left: 20px;
-}
-
 .header__right .MuiButton-root {
   -webkit-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;
@@ -79,6 +75,35 @@
 
 .header__right .MuiButton-root:hover {
   background-color: transparent;
+  color: #dc004e;
+  font-weight: bold;
+}
+
+.header__userInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header__userInfo .header__name {
+  padding: 0 0.5rem;
+  width: 5rem;
+  color: black;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.header__userInfo .header__name:hover {
   color: #dc004e;
   font-weight: bold;
 }

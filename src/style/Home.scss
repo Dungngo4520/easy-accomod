@@ -5,4 +5,10 @@
 .home__section {
 	display: flex;
 	padding: 30px;
+	display: grid;
+	place-content: center;
+
+	.card {
+		max-width: 30vw;
+	}
 }

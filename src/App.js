@@ -25,8 +25,8 @@ function App() {
 					<Header />
 					<Switch>
 						<PrivateRoute path='/properties/:propertyId' component={PropertyPage} />
-						<PrivateRoute path='/account' component={Account} />
-						<PrivateRoute path='/profile' component={Profile} />
+						<PrivateRoute path='/account' component={Profile} />
+						<PrivateRoute path='/profile' component={Account} />
 						<Route path='/signup' component={SignUp} />
 						<Route path='/signin' component={SignIn} />
 						<Route path='/forgot' component={ForgotPassword} />

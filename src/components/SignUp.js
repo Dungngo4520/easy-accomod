@@ -17,7 +17,7 @@ import firebase from 'firebase'
 export default function SignUp() {
 	const history = useHistory()
 
-	const { signUp, signUpAsHost, showError } = useContext(AuthContext)
+	const { signUp, signUpAsHost, showError, setRole } = useContext(AuthContext)
 	const [selection, setSelection] = useState('customer')
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
@@ -71,6 +71,7 @@ export default function SignUp() {
 					lastname: lname,
 					phone: phone,
 				})
+				setRole('user')
 				showError('User is created. Redirect to Home', true)
 				setTimeout(() => {
 					history.push('/')
@@ -100,6 +101,7 @@ export default function SignUp() {
 					phone: phone,
 					verified: false,
 				})
+				setRole('owner')
 				showError('User is created. Redirecting to Home', true)
 				setTimeout(() => {
 					history.push('/')

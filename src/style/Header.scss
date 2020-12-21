@@ -45,14 +45,29 @@
 	justify-content: space-between;
 	margin-right: 40px;
 
-	button {
-		margin-left: 20px;
-	}
-
 	.MuiButton-root {
 		transition: all 250ms ease-in-out;
 		&:hover {
 			background-color: transparent;
+			color: #dc004e;
+			font-weight: bold;
+		}
+	}
+}
+
+.header__userInfo {
+	display: flex;
+	align-items: center;
+
+	.header__name {
+		padding: 0 0.5rem;
+		width: 5rem;
+		color: black;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		transition: all 200ms ease-in-out;
+		&:hover {
 			color: #dc004e;
 			font-weight: bold;
 		}

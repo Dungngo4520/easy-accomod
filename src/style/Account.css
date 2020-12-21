@@ -1,7 +1,7 @@
 .account {
   min-width: 700px;
   width: 50%;
-  height: 80vh;
+  min-height: 750px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -63,10 +63,16 @@
 }
 
 .info__label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 2rem;
   font-size: xx-large;
   font-weight: 600;
   text-transform: capitalize;
-  padding-bottom: 2rem;
 }
 
 .personal__info .personalInfo__section .infoSection__field {
@@ -80,6 +86,7 @@
 
 .notification .unread {
   font-weight: 600;
+  cursor: pointer;
 }
 
 hr {

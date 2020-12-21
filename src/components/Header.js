@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
-import { Avatar, Button, IconButton, Menu, MenuItem } from '@material-ui/core'
+import { Avatar, Button, IconButton, Menu, MenuItem, Typography } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom'
 import { useState } from 'react'
-import { auth } from '../firebase'
 import { AuthContext } from './Auth'
 import '../style/Header.css'
 
 function Header() {
 	const history = useHistory()
 	const [anchorEl, setAnchorEl] = useState(null)
-	const { currentUser } = useContext(AuthContext)
+	const { currentUser, signOut, showError, loadFromLocalStorage } = useContext(AuthContext)
+	const userData = loadFromLocalStorage('userdata')
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget)
@@ -20,7 +20,8 @@ function Header() {
 	}
 
 	const handleSignOut = () => {
-		auth.signOut()
+		signOut()
+		showError('User Signed Out', true)
 		handleClose()
 	}
 
@@ -39,9 +40,19 @@ function Header() {
 					Explore
 				</Button>
 				{currentUser ? (
-					<IconButton color='secondary' aria-controls='menu' aria-haspopup='true' onClick={handleClick}>
-						<Avatar />
-					</IconButton>
+					<div className='header__userInfo'>
+						<Typography
+							color='secondary'
+							className='header__name'
+							onClick={() => {
+								history.push('/account')
+							}}>
+							{userData ? `${userData.firstname} ${userData.lastname}` : ''}
+						</Typography>
+						<IconButton color='secondary' aria-controls='menu' aria-haspopup='true' onClick={handleClick}>
+							<Avatar src={userData.photoURL} />
+						</IconButton>
+					</div>
 				) : (
 					''
 				)}

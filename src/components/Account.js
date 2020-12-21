@@ -1,9 +1,63 @@
-import { Badge, Button, Paper } from '@material-ui/core'
-import React, { useState } from 'react'
+import { Badge, Button, IconButton, MenuItem, Paper, Select, TextField } from '@material-ui/core'
+import React, { useContext, useEffect, useState } from 'react'
 import '../style/Account.css'
+import { AuthContext } from './Auth'
+import { db } from '../firebase'
+import EditIcon from '@material-ui/icons/Edit'
+import CheckIcon from '@material-ui/icons/Check'
+import CloseIcon from '@material-ui/icons/Close'
+import firebase from 'firebase'
 
 function Account() {
+	const { loadFromLocalStorage, showError } = useContext(AuthContext)
+	const { id } = loadFromLocalStorage('userdata')
+	const role = loadFromLocalStorage('role')
 	const [selection, setSelection] = useState(1)
+	const [userData, setUserData] = useState({})
+	const [notifications, setNotifications] = useState([])
+	const [formData, setformData] = useState({})
+	const [change, setChange] = useState(false)
+	const [fullName, setFullName] = useState('')
+	const [gender, setGender] = useState(true)
+	const [dateofbirth, setDateofbirth] = useState(new Date().toLocaleDateString())
+	const [phone, setPhone] = useState('')
+	const [address, setAddress] = useState('')
+	const [govID, setGovID] = useState('')
+
+	useEffect(() => {
+		const load = async () => {
+			await db
+				.collection(role + 's')
+				.doc(id)
+				.onSnapshot((snapshot) => setUserData(snapshot.data()))
+			if (role === 'owner') {
+				await db
+					.collection('owners')
+					.doc(id)
+					.collection('notifications')
+					.orderBy('timestamp', 'desc')
+					.onSnapshot((snapshot) =>
+						setNotifications(
+							snapshot.docs.map((doc) => {
+								return { id: doc.id, ...doc.data() }
+							})
+						)
+					)
+			}
+		}
+		return load()
+	}, [id, role])
+	useEffect(() => {
+		setformData({
+			fullname: `${userData.firstname} ${userData.lastname}`,
+			gender: userData.male,
+			dateofbirth: new Date(userData.dateofbirth?.toDate()).toLocaleDateString(),
+			email: userData.email,
+			phone: userData.phone,
+			governmentID: userData.govid,
+			address: userData.address,
+		})
+	}, [userData])
 
 	const handleInfoClick = () => {
 		setSelection(1)
@@ -13,45 +67,44 @@ function Account() {
 		setSelection(2)
 	}
 
-	const handleNotiItemClick = (id) => {
-		setNotification(
-			notification.map((item) =>
-				item.id === id
-					? {
-							...item,
-							read: !item.read,
-					  }
-					: item
-			)
-		)
+	const handleNotiItemClick = (noti) => {
+		db.collection('owners')
+			.doc(id)
+			.collection('notifications')
+			.doc(noti.id)
+			.set({ ...noti, read: true })
 	}
 
-	const userInfo = {
-		id: 1,
-		fullname: 'Ngo Duc Dung',
-		gender: '1',
-		dateOfBirth: '05/04/2000',
-		email: 'notdungngo4520@gmail.com',
-		phone: '0123456789',
-		governmentID: '01123456789',
-		address: 'Cau Giay, Ha Noi',
+	const handleChangeInfo = () => {
+		setChange(true)
+		setAddress(formData.address)
+		setDateofbirth(formData.dateofbirth)
+		setFullName(formData.fullname)
+		setGender(formData.gender)
+		setGovID(formData.governmentID)
+		setPhone(formData.phone)
 	}
 
-	const [notification, setNotification] = useState([
-		{
-			id: 2,
-			timestamp: '01/01/2021',
-			read: false,
-			content: 'Add your work email to unlock extra perks for business trips, like simplified expensing. ',
-		},
-		{
-			id: 1,
-			timestamp: '01/01/2021',
-			read: false,
-			content:
-				'Please confirm your email address by clicking on the link we just emailed you. If you cannot find the email, you can request a new confirmation email or change your email address.',
-		},
-	])
+	const handleChangeConfirm = () => {
+		db.collection(role + 's')
+			.doc(id)
+			.set({
+				firstname: fullName.split(' ')[0],
+				lastname: fullName.slice(fullName.indexOf(' ') + 1),
+				male: gender,
+				address: address,
+				dateofbirth: firebase.firestore.Timestamp.fromDate(new Date(dateofbirth)),
+				email: formData.email,
+				govid: govID,
+				phone: phone,
+			})
+		setChange(false)
+	}
+
+	const handleChangeClose = () => {
+		console.log(formData)
+		setChange(false)
+	}
 
 	return (
 		<Paper elevation={3} className='account'>
@@ -59,69 +112,194 @@ function Account() {
 				<Button className={`navbar__item ${selection === 1 ? 'active' : ''}`} onClick={handleInfoClick}>
 					Personal Info
 				</Button>
-				<Button className={`navbar__item ${selection === 2 ? 'active' : ''}`} onClick={handleNotiClick}>
-					<Badge
-						badgeContent={notification.filter((item) => !item.read).length}
-						color='secondary'
-						className='notification__badge'>
-						Notification
-					</Badge>
-				</Button>
+				{role === 'owner' ? (
+					<Button className={`navbar__item ${selection === 2 ? 'active' : ''}`} onClick={handleNotiClick}>
+						<Badge
+							badgeContent={notifications.filter((item) => !item.read).length}
+							color='secondary'
+							className='notification__badge'>
+							Notification
+						</Badge>
+					</Button>
+				) : (
+					''
+				)}
 			</Paper>
 			<Paper variant='outlined' square className='account__content'>
 				{selection === 1 ? (
 					<div className='personal__info'>
-						<p className='info__label'>personal Info</p>
+						<div className='info__label'>
+							<p className='info__title'>personal Info</p>
+							{change ? (
+								<>
+									<IconButton onClick={handleChangeConfirm} color='secondary'>
+										<CheckIcon />
+									</IconButton>
+									<IconButton onClick={handleChangeClose} color='secondary'>
+										<CloseIcon />
+									</IconButton>
+								</>
+							) : (
+								<IconButton onClick={handleChangeInfo} color='secondary'>
+									<EditIcon />
+								</IconButton>
+							)}
+						</div>
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Full name</p>
-							<p className='infoSection__content'>{userInfo.fullname}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.fullname}</p>
+							) : (
+								<TextField
+									className='infoSection__content'
+									color='secondary'
+									required
+									fullWidth
+									id='name'
+									name='name'
+									autoComplete='name'
+									autoFocus
+									value={fullName}
+									onChange={(e) => {
+										setFullName(e.target.value)
+									}}
+								/>
+							)}
 						</div>
 						<hr />
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Gender</p>
-							<p className='infoSection__content'>{userInfo.gender === 1 ? 'Male' : 'Female'}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.gender ? 'Male' : 'Female'}</p>
+							) : (
+								<Select
+									color='secondary'
+									className='infoSection__content'
+									value={gender}
+									onChange={(e) => {
+										setGender(e.target.value)
+									}}>
+									<MenuItem value={true}>Male</MenuItem>
+									<MenuItem value={false}>Female</MenuItem>
+								</Select>
+							)}
 						</div>
 						<hr />
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Date of birth</p>
-							<p className='infoSection__content'>{userInfo.dateOfBirth}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.dateofbirth}</p>
+							) : (
+								<TextField
+									color='secondary'
+									className='infoSection__content'
+									id='date'
+									type='date'
+									onChange={(e) => {
+										setDateofbirth(e.target.value)
+									}}
+								/>
+							)}
 						</div>
 						<hr />
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Email address</p>
-							<p className='infoSection__content'>{userInfo.email}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.email}</p>
+							) : (
+								<TextField
+									className='infoSection__content'
+									color='secondary'
+									required
+									disabled
+									fullWidth
+									id='email'
+									name='email'
+									type='email'
+									autoComplete='email'
+									value={formData.email}
+								/>
+							)}
 						</div>
 						<hr />
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Phone number</p>
-							<p className='infoSection__content'>{userInfo.phone}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.phone}</p>
+							) : (
+								<TextField
+									className='infoSection__content'
+									color='secondary'
+									required
+									fullWidth
+									id='phone'
+									name='phone'
+									autoComplete='phone'
+									value={phone}
+									onChange={(e) => {
+										setPhone(e.target.value)
+									}}
+								/>
+							)}
 						</div>
 						<hr />
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Government ID</p>
-							<p className='infoSection__content'>{userInfo.governmentID}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.governmentID}</p>
+							) : (
+								<TextField
+									className='infoSection__content'
+									color='secondary'
+									required
+									fullWidth
+									id='id'
+									name='id'
+									autoComplete='id'
+									value={govID}
+									onChange={(e) => {
+										setGovID(e.target.value)
+									}}
+								/>
+							)}
 						</div>
 						<hr />
 						<div className='personalInfo__section'>
 							<p className='infoSection__field'>Address</p>
-							<p className='infoSection__content'>{userInfo.address}</p>
+							{!change ? (
+								<p className='infoSection__content'>{formData.address}</p>
+							) : (
+								<TextField
+									className='infoSection__content'
+									color='secondary'
+									required
+									fullWidth
+									id='address'
+									name='address'
+									autoComplete='address'
+									value={address}
+									onChange={(e) => setAddress(e.target.value)}
+								/>
+							)}
 						</div>
 						<hr />
 					</div>
-				) : (
+				) : role === 'owner' ? (
 					<div className='notification'>
 						<p className='info__label'>Notification</p>
-						{notification.map((item) => (
+						{notifications.map((item) => (
 							<div
 								className={`notification__item ${item.read ? '' : 'unread'}`}
 								onClick={() => {
-									if (!item.read) handleNotiItemClick(item.id)
+									handleNotiItemClick(item)
 								}}>
 								<p>{item.content}</p>
 								<hr />
 							</div>
 						))}
 					</div>
+				) : (
+					''
 				)}
 			</Paper>
 		</Paper>

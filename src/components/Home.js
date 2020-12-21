@@ -1,31 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Banner from './Banner'
 import Card from './Card'
 import '../style/Home.css'
-
+import { db } from '../firebase'
+import { useHistory } from 'react-router-dom'
 function Home() {
+	const history = useHistory()
+	const [properties, setProperties] = useState([])
+
+	useEffect(() => {
+		db.collection('properties')
+			.get()
+			.then((data) =>
+				setProperties(
+					data.docs.map((doc) => {
+						return { ...doc.data(), id: doc.id }
+					})
+				)
+			)
+	}, [])
+
 	return (
 		<div className='home'>
 			<Banner />
 			<div className='home__section'>
-				<Card
-					src='https://media.nomadicmatt.com/2019/airbnb_breakup3.jpg'
-					title='3 Bedroom Flat in Bournemouth'
-					description='Superhost with a stunning view of the beachside in Sunny Bournemouth'
-					price='£130/month'
-				/>
-				<Card
-					src='https://thespaces.com/wp-content/uploads/2017/08/Courtesy-of-Airbnb.jpg'
-					title='Penthouse in London'
-					description='Enjoy the amazing sights of London with this stunning penthouse'
-					price='£350/month'
-				/>
-				<Card
-					src='https://media.nomadicmatt.com/2018/apartment.jpg'
-					title='1 Bedroom apartment'
-					description='Superhost with great amenities and a fabulous shopping complex nearby'
-					price='£70/month'
-				/>
+				{properties.map((item) => (
+					<Card
+						onClick={() => {
+							history.push(`/properties/${item.id}`)
+						}}
+						src={item.images[0]}
+						title={item.title}
+						description={item.description}
+						price={`${item.price}$/month`}
+					/>
+				))}
 			</div>
 		</div>
 	)
