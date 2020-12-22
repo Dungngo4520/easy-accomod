@@ -14,6 +14,7 @@ import ScrollToTop from './ScrollToTop'
 import SignUp from './SignUp'
 import PrivateRoute from './PrivateRoute'
 import { AuthProvider } from './Auth'
+import PostProperty from './PostProperty'
 
 function App() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 					<Header />
 					<Switch>
 						<Route path='/properties/:propertyId' component={PropertyPage} />
+						<Route path='/postProperty' component={PostProperty} />
 						<Route path='/signup' component={SignUp} />
 						<Route path='/signin' component={SignIn} />
 						<PrivateRoute path='/account' component={Account} />
