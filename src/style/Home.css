@@ -7,5 +7,12 @@
   display: -ms-flexbox;
   display: flex;
   padding: 30px;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
+
+.home__section .card {
+  max-width: 30vw;
 }
 /*# sourceMappingURL=Home.css.map */

@@ -1,6 +1,6 @@
 .banner {
   background-image: url("https://get.pxhere.com/photo/home-property-living-room-room-interior-design-design-estate-condominium-real-estate-dining-room-modern-living-room-modern-decor-contemporary-decor-stay-open-decoration-design-living-room-design-1286904.jpg");
-  height: 50vh;
+  height: 50%;
   position: relative;
   background-position: center;
 }
@@ -9,7 +9,7 @@
   background-color: black;
   color: white;
   padding: 25vh 50px 40px 50px;
-  width: 300px;
+  width: 20vw;
 }
 
 .banner__info > button {

@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core'
 import React from 'react'
-import './style/Banner.css'
+import '../style/Banner.css'
 import { useHistory } from 'react-router-dom'
 
 function Banner() {

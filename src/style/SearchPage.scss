@@ -1,4 +1,4 @@
-.searchPage{
+.searchPage {
 	min-width: 700px;
 }
 
@@ -11,7 +11,16 @@
 
 	> button {
 		border-radius: 30px;
-		text-transform: inherit;
-        margin: 5px;
+		text-transform: inherit !important;
+		margin: 5px;
+	}
+}
+
+.search__filters {
+	display: flex;
+	align-items: center;
+	.filters {
+		width: 6%;
+		padding: 0 1rem;
 	}
 }
