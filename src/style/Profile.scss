@@ -56,6 +56,13 @@
 	}
 
 	.profileInfo__about {
+		.title {
+			font-weight: 500;
+			font-size: larger;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
 		&-description {
 			padding-top: 10px;
 			color: #555;

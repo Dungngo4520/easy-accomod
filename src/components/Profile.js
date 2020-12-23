@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Avatar, Button, Paper } from '@material-ui/core'
+import { Avatar, Button, IconButton, Paper, TextField } from '@material-ui/core'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import PhoneIcon from '@material-ui/icons/Phone'
 import EmailIcon from '@material-ui/icons/Email'
+import CheckIcon from '@material-ui/icons/Check'
+import CloseIcon from '@material-ui/icons/Close'
+import EditIcon from '@material-ui/icons/Edit'
 import AwesomeSlider from 'react-awesome-slider'
 import { useHistory } from 'react-router-dom'
 import '../style/Profile.css'
@@ -16,7 +19,8 @@ function Profile() {
 	const { id } = loadFromLocalStorage('userdata')
 	const [userData, setUserData] = useState({})
 	const [properties, setProperties] = useState([])
-
+	const [changeAbout, setChangeAbout] = useState('')
+	const [change, setChange] = useState(false)
 	useEffect(() => {
 		const loadUserData = async () => {
 			await db
@@ -36,6 +40,20 @@ function Profile() {
 
 	const handleAddClick = () => {
 		history.push('/post')
+	}
+
+	const handleChangeClose = () => {
+		setChange(false)
+	}
+	const handleChangeConfirm = () => {
+		db.collection(`${role}s`)
+			.doc(id)
+			.set({ ...userData, about: changeAbout })
+		setChange(false)
+	}
+	const handleChangeAbout = () => {
+		setChangeAbout(userData.about)
+		setChange(true)
 	}
 
 	return (
@@ -67,14 +85,48 @@ function Profile() {
 				</div>
 				<hr />
 				<div className='profileInfo__about'>
-					<p className='title'>About</p>
-					<p className='profileInfo__about-description'>{userData.about}</p>
+					<div className='title'>
+						<p>About</p>
+						{change ? (
+							<div>
+								<IconButton onClick={handleChangeConfirm} color='secondary'>
+									<CheckIcon />
+								</IconButton>
+								<IconButton onClick={handleChangeClose} color='secondary'>
+									<CloseIcon />
+								</IconButton>
+							</div>
+						) : (
+							<IconButton onClick={handleChangeAbout} color='secondary'>
+								<EditIcon />
+							</IconButton>
+						)}
+					</div>
+					{!change ? (
+						<p className='profileInfo__about-description'>{userData.about}</p>
+					) : (
+						<TextField
+							className='infoSection__content'
+							color='secondary'
+							required
+							fullWidth
+							id='name'
+							name='name'
+							autoComplete='name'
+							autoFocus
+							multiline
+							value={changeAbout}
+							onChange={(e) => {
+								setChangeAbout(e.target.value)
+							}}
+						/>
+					)}
 				</div>
 				<hr />
 				{role === 'owner' || role === 'admin' ? (
 					<div className='profileInfo__listing'>
 						<div className='title'>
-							<p className='title__text'>Dung Ngo's listings</p>
+							<p className='title__text'>{`${userData.firstname} ${userData.lastname}`}'s listings</p>
 							<Button className='title_btn' onClick={handleAddClick}>
 								Add new
 							</Button>

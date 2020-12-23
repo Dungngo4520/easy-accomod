@@ -92,7 +92,8 @@ export default function SignUp() {
 				await db.collection('owners').add({
 					about: '',
 					address: address,
-					dateofbirth: firebase.firestore.FieldValue.serverTimestamp(),
+					dateofbirth: firebase.firestore.Timestamp.fromDate('1/1/1970'),
+					createdat: firebase.firestore.FieldValue.serverTimestamp(),
 					email: email,
 					firstname: fname,
 					lastname: lname,

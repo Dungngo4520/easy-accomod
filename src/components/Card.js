@@ -7,7 +7,7 @@ function Card({ src, title, description, price, onClick }) {
 			<img src={src} alt='' />
 			<div className='card__info'>
 				<h2>{title}</h2>
-				<h4>{description}</h4>
+				<h4>{description.length > 200 ? description.slice(0, 200) + '...' : description}</h4>
 				<h3>{price}</h3>
 			</div>
 		</div>
