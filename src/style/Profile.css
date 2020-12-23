@@ -80,10 +80,23 @@
   color: #555;
 }
 
-.profile__info .title {
+.profile__info .profileInfo__listing .title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   font-size: x-large;
   font-weight: 500;
   color: #222;
+}
+
+.profile__info .profileInfo__listing .title button {
+  color: #dc004e !important;
 }
 
 hr {

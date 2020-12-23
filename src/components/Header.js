@@ -8,7 +8,7 @@ import '../style/Header.css'
 function Header() {
 	const history = useHistory()
 	const [anchorEl, setAnchorEl] = useState(null)
-	const { currentUser, signOut, showError, loadFromLocalStorage } = useContext(AuthContext)
+	const { currentUser, signOut, showError, loadFromLocalStorage } = useContext( AuthContext )
 	const userData = loadFromLocalStorage('userdata')
 
 	const handleClick = (event) => {

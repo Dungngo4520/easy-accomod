@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Avatar, Paper } from '@material-ui/core'
+import { Avatar, Button, Paper } from '@material-ui/core'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import PhoneIcon from '@material-ui/icons/Phone'
 import EmailIcon from '@material-ui/icons/Email'
@@ -23,7 +23,7 @@ function Profile() {
 				.collection(`${role}s`)
 				.doc(id)
 				.onSnapshot((snapshot) => setUserData(snapshot.data()))
-			if (role === 'owner') {
+			if (role === 'owner' || role === 'admin') {
 				await db
 					.collection(`${role}s`)
 					.doc(id)
@@ -33,6 +33,10 @@ function Profile() {
 		}
 		return loadUserData()
 	}, [id, role])
+
+	const handleAddClick = () => {
+		history.push('/post')
+	}
 
 	return (
 		<div className='profile'>
@@ -67,9 +71,14 @@ function Profile() {
 					<p className='profileInfo__about-description'>{userData.about}</p>
 				</div>
 				<hr />
-				{role === 'owner' ? (
+				{role === 'owner' || role === 'admin' ? (
 					<div className='profileInfo__listing'>
-						<p className='title'>Dung Ngo's listings</p>
+						<div className='title'>
+							<p className='title__text'>Dung Ngo's listings</p>
+							<Button className='title_btn' onClick={handleAddClick}>
+								Add new
+							</Button>
+						</div>
 						{properties.length !== 0 ? (
 							<AwesomeSlider className='aws-btn'>
 								{properties

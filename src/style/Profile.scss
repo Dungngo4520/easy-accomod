@@ -10,7 +10,7 @@
 .profile__card {
 	flex: 0.3;
 	border-radius: 20px !important;
-    height: fit-content;
+	height: fit-content;
 	.profileCard__avatar {
 		padding: 30px;
 		display: grid;
@@ -61,11 +61,19 @@
 			color: #555;
 		}
 	}
+	.profileInfo__listing {
+		.title {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: x-large;
+			font-weight: 500;
+			color: #222;
 
-	.title {
-		font-size: x-large;
-		font-weight: 500;
-		color: #222;
+			button {
+				color: #dc004e !important;
+			}
+		}
 	}
 }
 

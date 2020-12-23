@@ -1,20 +1,20 @@
-import { Button, MenuItem, Slider, TextField, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import {  MenuItem, Slider, TextField, Typography } from '@material-ui/core'
+import React, { useContext, useEffect, useState } from 'react'
 import '../style/SearchPage.css'
 import SearchResult from './SearchResult'
 import { useHistory } from 'react-router-dom'
 import { db } from '../firebase'
+import { AuthContext } from './Auth'
+
 function SearchPage() {
+	const { showError } = useContext(AuthContext)
 	const history = useHistory()
 	const [properties, setProperties] = useState([])
-	const [maxPrice, setMaxPrice] = useState(0)
-	const [maxArea, setMaxArea] = useState(0)
 	const [typeFilter, setTypeFilter] = useState('All')
 	const [priceFilter, setPriceFilter] = useState([5, 15])
 	const [areaFilter, setAreaFilter] = useState([10, 50])
 	const [locationFilter, setLocationFilter] = useState('')
 	const [nearbyFilter, setNearbyFilter] = useState('')
-	const [other, setOther] = useState({})
 	const [dataFiltered, setDataFiltered] = useState([])
 	const types = [
 		{ value: 'All', label: 'All' },
@@ -33,19 +33,8 @@ function SearchPage() {
 					})
 				)
 			})
-			await db
-				.collection('properties')
-				.orderBy('price', 'desc')
-				.limit(1)
-				.onSnapshot((snapshot) => setMaxPrice(snapshot.docs[0].data().price))
-
-			await db
-				.collection('properties')
-				.orderBy('price', 'desc')
-				.limit(1)
-				.onSnapshot((snapshot) => setMaxArea(snapshot.docs[0].data().area))
 		}
-		return loadProperties
+		return loadProperties()
 	}, [])
 
 	useEffect(() => {
@@ -65,20 +54,26 @@ function SearchPage() {
 							value={locationFilter}
 							onChange={(e) => {
 								setLocationFilter(e.target.value)
-								setDataFiltered(
-									properties
-										.filter((item) => item.price >= priceFilter[0] && item.price <= priceFilter[1])
-										.filter((item) => item.area >= areaFilter[0] && item.area <= areaFilter[1])
-										.filter((item) =>
-											new RegExp(e.target.value === '' ? '.' : e.target.value, 'gi').test(
-												item.address
+								if (!/\W/.test(e.target.value))
+									setDataFiltered(
+										properties
+											.filter(
+												(item) => item.price >= priceFilter[0] && item.price <= priceFilter[1]
 											)
-										)
-										.filter((item) =>
-											new RegExp(nearbyFilter === '' ? '.' : nearbyFilter, 'gi').test(item.nearby)
-										)
-										.filter((item) => (typeFilter === 'All' ? true : item.type === typeFilter))
-								)
+											.filter((item) => item.area >= areaFilter[0] && item.area <= areaFilter[1])
+											.filter((item) =>
+												new RegExp(e.target.value === '' ? '.' : e.target.value, 'gi').test(
+													item.address
+												)
+											)
+											.filter((item) =>
+												new RegExp(nearbyFilter === '' ? '.' : nearbyFilter, 'gi').test(
+													item.nearby
+												)
+											)
+											.filter((item) => (typeFilter === 'All' ? true : item.type === typeFilter))
+									)
+								else showError('Do not use special character!')
 							}}
 						/>
 					</div>
@@ -147,7 +142,6 @@ function SearchPage() {
 						<Slider
 							color='secondary'
 							value={priceFilter}
-							max={maxPrice}
 							min={0}
 							onChange={(e, newValue) => {
 								setPriceFilter(newValue)
@@ -178,7 +172,6 @@ function SearchPage() {
 						<Slider
 							color='secondary'
 							value={areaFilter}
-							max={maxArea}
 							min={0}
 							onChange={(e, newValue) => {
 								setAreaFilter(newValue)

@@ -14,13 +14,12 @@ import WbIncandescentIcon from '@material-ui/icons/WbIncandescent'
 import WbSunnyIcon from '@material-ui/icons/WbSunny'
 import OpacityIcon from '@material-ui/icons/Opacity'
 import DevicesOtherIcon from '@material-ui/icons/DevicesOther'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { db } from '../firebase'
 import 'react-awesome-slider/dist/styles.css'
 import '../style/PropertyPage.css'
 import { AuthContext } from './Auth'
 function PropertyPage(id) {
-	const history = useHistory()
 	const [propertyData, setPropertyData] = useState({})
 	const [propertyOwner, setPropertyOwner] = useState({})
 	const [comments, setComments] = useState([])
@@ -139,6 +138,17 @@ function PropertyPage(id) {
 					<div className='propertyInfo__condition'>
 						<p>{propertyData.type}</p>
 						<p> · </p>
+						{propertyData.type === 'Apartment' ? (
+							<>
+								<p>
+									{propertyData.rooms}
+									{propertyData.rooms > 2 ? ' rooms' : ' room'}
+								</p>
+								<p> · </p>
+							</>
+						) : (
+							''
+						)}
 						<p>{propertyData.area}m²</p>
 						<p> · </p>
 						<p>{propertyData.sharewithhost ? 'Stay with owner' : 'Private'}</p>
@@ -197,7 +207,9 @@ function PropertyPage(id) {
 			<div className='propertyInfo__review'>
 				<div className='property__rate'>
 					<StarIcon className='property__star' />
-					<p>5 (7 reviews)</p>
+					<p>
+						{propertyData.rating} ({comments.length} reviews)
+					</p>
 				</div>
 				{comments.map((comment) => (
 					<div className='propertyInfoReview__comment'>

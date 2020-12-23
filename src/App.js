@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-
 import Home from './components/Home'
 import Header from './components/Header'
 import SearchPage from './components/SearchPage'
@@ -18,7 +17,6 @@ import PrivateRoute from './components/PrivateRoute'
 import { AuthProvider } from './components/Auth'
 import PostProperty from './components/PostProperty'
 
-
 function App() {
 	return (
 		<div className='app'>
@@ -27,8 +25,7 @@ function App() {
 					<ScrollToTop />
 					<Header />
 					<Switch>
-
-						<Route path='/postProperty' component={PostProperty} />
+						<PrivateRoute path='/post' component={PostProperty} />
 						<PrivateRoute path='/properties/:propertyId' component={PropertyPage} />
 						<PrivateRoute path='/account' component={Profile} />
 						<PrivateRoute path='/profile' component={Account} />

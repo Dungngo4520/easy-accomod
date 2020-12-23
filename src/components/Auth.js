@@ -105,6 +105,7 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	auth.onAuthStateChanged((user) => {
+		saveToLocalStorage('currentuser', user)
 		setCurrentUser(user)
 	})
 

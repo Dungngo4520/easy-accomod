@@ -20,6 +20,8 @@
   width: 350px;
   border-radius: 10px;
   overflow: hidden;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .searchResult__info {
