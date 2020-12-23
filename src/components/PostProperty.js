@@ -1,27 +1,32 @@
-import {  Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputLabel, makeStyles, MenuItem, Select, TextField, Typography } from '@material-ui/core';
+import {  Button, FormControl, IconButton, InputLabel, makeStyles, MenuItem, Select, TextField} from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
+import React, { useContext, useEffect } from 'react';
 import 'react-awesome-slider/dist/styles.css'
+import { AuthContext } from './Auth';
+
+
+
 
 var property = {
     /*Header */
-    title: "",
-    address: "", //số nhà- đường (thôn)- phường(thị xã) -quận (huyện)- tỉnh (thành phố)
+    title: "",//(bat buoc)
+    address: "", //(bat buoc)số nhà- đường (thôn)- phường(thị xã) -quận (huyện)- tỉnh (thành phố)
     nearby: "",// gan dia diem cong cong
     description: "",
-    type:"", // Motel, Mini Apartment, Wholehouse, Apartment//loai phong
+    type:"", //(bat buoc)Motel, Mini Apartment, Wholehouse, Apartment//loai phong
     numberofrooms: 0,// so phong                 ------------Chưa có biến này trong database----------
     area: 0, // dien tich phong
     sharewithhost:false,// false/true No/Yes
     images:[], // toi thieu 3 hinh
 
     /*Amenities*/
-    privatebathroom: false, //Closed/Shared
-    heating: false,
+    privatebathroom: null, //(bat buoc)Closed/Shared
+    heating: null,//(bat buoc)
 
-    kitchen: "",//Private/Public/No Cooking
+    kitchen: "",//(bat buoc)Private/Public/No Cooking
 
-    airconditioning:false,
-    balcony: false,
+    airconditioning:null,//(bat buoc)
+    balcony: null,//(bat buoc)
 
     price: 0,
     electricityprice: "",// Rental Price/Household Price
@@ -52,8 +57,50 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-function PostProperty() {
-	const classes = useStyles();
+function PostProperty(){
+    const classes = useStyles();
+    
+    const { showError } = useContext(AuthContext)
+ 
+    const handleForm = () => {
+        if(property.title === ""){
+            showError("Title is required", false);
+        }
+        else if(property.address=== ""){
+            showError("Address is required", false);
+        }
+        else if(property.type===""){
+            showError("Type is required", false);
+        }
+        else if(property.privatebathroom === null){
+            showError("Bathroom is required", false);
+        }
+        else if(property.heating === null){
+            showError("Heating is required", false);
+        }
+        else if(property.kitchen === ""){
+            showError("Kitchen is required", false);
+        }
+        else if(property.airconditioning === null){
+            showError("Airconditioning is required", false);
+        }
+        else if(property.balcony === null){
+            showError("Balcony is required", false);
+        }
+        else{
+            showError("Form finished", true);
+        }
+    }
+
+    useEffect(() => {
+		if (true) {
+			//showError('User Signed In', true)
+			setTimeout(() => {
+				//history.push(from)
+			}, 100)
+		}
+	}, [showError])
+
 	return (
 		<div className="postproperty__page" style={{padding:20}}>
             <form className='property__form' className={classes.root}  noValidate style = {{ width: '748px', margin: '0 auto'}}>{/* width =  %? */}
@@ -66,7 +113,7 @@ function PostProperty() {
                     color='secondary'
                     fullWidth
                     id='title'
-                    label='Title'
+                    label='Title*'
                     name='Title'
                     type='text'
                     autoFocus
@@ -82,7 +129,7 @@ function PostProperty() {
                     color='secondary'
                     fullWidth
                     id='address'
-                    label='Address(Street-Road-Ward-District-Province)'
+                    label='Address(Street-Road-Ward-District-Province)*'
                     name='Address'
                     type='text'
                     onChange={(e) => {
@@ -124,7 +171,7 @@ function PostProperty() {
 
                     {/* type */}
                     <FormControl variant="outlined"  margin='normal' style = {{width: '32%', marginRight: '3%'}} >
-                        <InputLabel fullWidth id="typeinput">Type</InputLabel>   
+                        <InputLabel fullWidth id="typeinput">Type*</InputLabel>   
                         <Select
                         fullWidth
                         id="type"
@@ -214,7 +261,7 @@ function PostProperty() {
                     {/* privatebathroom: false, //Closed/Shared */}
                     {/* heating: false, */}
                     <FormControl variant="outlined" fullWidth margin='normal' style = {{width: '47%', marginRight: '3%'}}>
-                    <InputLabel id="">Bathroom</InputLabel>   
+                    <InputLabel id="">Bathroom*</InputLabel>   
                         <Select
                         id="privatebathroom"
                         margin='normal'
@@ -230,7 +277,7 @@ function PostProperty() {
                     </FormControl>
 
                     <FormControl variant="outlined" fullWidth margin='normal' style = {{width: '50%'}}>
-                        <InputLabel id="">Heating</InputLabel>   
+                        <InputLabel id="">Heating*</InputLabel>   
                         <Select
                         id="heating"
                         margin='normal'
@@ -247,7 +294,7 @@ function PostProperty() {
 
                     {/* kitchen: "",//Private/Public/No Cooking */}
                     <FormControl variant="outlined" fullWidth margin='normal'>
-                        <InputLabel id="">Kitchen</InputLabel>   
+                        <InputLabel id="">Kitchen*</InputLabel>   
                         <Select
                         id="kitchen"
                         margin='normal'
@@ -266,7 +313,7 @@ function PostProperty() {
                     {/* airconditioning:false, */}
                     {/* balcony: false, */}
                     <FormControl variant="outlined" fullWidth margin='normal' style = {{width: '47%', marginRight: '3%'}}>
-                        <InputLabel id="">Airconditioning</InputLabel>   
+                        <InputLabel id="">Airconditioning*</InputLabel>   
                         <Select
                         id="airconditioning"
                         margin='normal'
@@ -282,7 +329,7 @@ function PostProperty() {
                     </FormControl>
 
                     <FormControl variant="outlined" fullWidth margin='normal' style = {{width: '50%'}}>
-                        <InputLabel id="">Balcony</InputLabel>   
+                        <InputLabel id="">Balcony*</InputLabel>   
                         <Select
                         id="balcony"
                         margin='normal'
@@ -367,7 +414,8 @@ function PostProperty() {
                 </div>
                 
 
-                <Button variant="contained" size="large" color="secondary" fullWidth margin="normal" style={{ marginTop:50}}>
+                <Button variant="contained" size="large" color="secondary" fullWidth margin="normal" style={{ marginTop:50}}
+                onClick={handleForm}>
                     Summit
                 </Button>
             </form>
