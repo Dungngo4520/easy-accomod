@@ -1,9 +1,6 @@
-
-
 import {  Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputLabel, makeStyles, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 import 'react-awesome-slider/dist/styles.css'
-import './style/PropertyPage.css'
 
 var property = {
     /*Header */
