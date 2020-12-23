@@ -9,7 +9,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import firebase from 'firebase'
 
 function Account() {
-	const { loadFromLocalStorage, showError } = useContext(AuthContext)
+	const { loadFromLocalStorage } = useContext(AuthContext)
 	const { id } = loadFromLocalStorage('userdata')
 	const role = loadFromLocalStorage('role')
 	const [selection, setSelection] = useState(1)

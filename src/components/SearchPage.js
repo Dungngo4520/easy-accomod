@@ -1,4 +1,4 @@
-import {  MenuItem, Slider, TextField, Typography } from '@material-ui/core'
+import { MenuItem, Slider, TextField, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import '../style/SearchPage.css'
 import SearchResult from './SearchResult'

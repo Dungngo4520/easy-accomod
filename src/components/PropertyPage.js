@@ -226,7 +226,7 @@ function PropertyPage(id) {
 				<div className='property__rate'>
 					<StarIcon className='property__star' />
 					<p>
-						{propertyData.rating} ({comments.length} reviews)
+						{propertyData.rating} ({comments.length} review{comments.length > 1 ? 's' : ''})
 					</p>
 				</div>
 				{comments.map((comment) => (
