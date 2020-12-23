@@ -49,6 +49,18 @@
   color: #dc004e;
 }
 
+.property__addComment {
+  padding-top: 1rem;
+}
+
+.property__addComment .MuiFormControl-root {
+  width: 100%;
+}
+
+.property__addComment .MuiFormControl-root .MuiOutlinedInput-root {
+  border-radius: 30px;
+}
+
 .propertyPage__subtitleLeft .MuiButton-root {
   -webkit-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;

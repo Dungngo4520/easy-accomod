@@ -34,6 +34,16 @@
 	}
 }
 
+.property__addComment {
+	padding-top: 1rem;
+	.MuiFormControl-root {
+		width: 100%;
+		.MuiOutlinedInput-root {
+			border-radius: 30px;
+		}
+	}
+}
+
 .propertyPage__subtitleLeft {
 	.MuiButton-root {
 		transition: all 250ms ease-in-out;
@@ -236,4 +246,3 @@ hr {
 	margin: 20px 0;
 	border-top: #b0b0b0;
 }
-

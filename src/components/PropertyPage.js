@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import AwesomeSlider from 'react-awesome-slider'
 import StarIcon from '@material-ui/icons/Star'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import { Avatar, Button, Paper } from '@material-ui/core'
+import { Avatar, Button, Paper, TextField } from '@material-ui/core'
 import NearMeIcon from '@material-ui/icons/NearMe'
 import BathtubIcon from '@material-ui/icons/Bathtub'
 import KitchenIcon from '@material-ui/icons/Kitchen'
@@ -19,6 +19,8 @@ import { db } from '../firebase'
 import 'react-awesome-slider/dist/styles.css'
 import '../style/PropertyPage.css'
 import { AuthContext } from './Auth'
+import firebase from 'firebase'
+
 function PropertyPage(id) {
 	const [propertyData, setPropertyData] = useState({})
 	const [propertyOwner, setPropertyOwner] = useState({})
@@ -26,8 +28,8 @@ function PropertyPage(id) {
 	const [favorites, setFavorites] = useState([])
 	const [favorite, setFavorite] = useState(false)
 	const [favoriteID, setFavoriteID] = useState('')
+	const [currentComment, setCurrentComment] = useState('')
 	const { loadFromLocalStorage } = useContext(AuthContext)
-
 	const userData = loadFromLocalStorage('userdata')
 	const role = loadFromLocalStorage('role')
 
@@ -93,6 +95,22 @@ function PropertyPage(id) {
 				.collection('favorites')
 				.add({ property: `/properties/${id.match.params.propertyId}` })
 		}
+	}
+
+	const handleCommentSubmit = (e) => {
+		e.preventDefault()
+		db.collection('properties')
+			.doc(id.match.params.propertyId)
+			.collection('comments')
+			.add({
+				content: currentComment,
+				name: `${userData.firstname} ${userData.lastname}`,
+				rating: 5,
+				status: 'verified',
+				timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+				user: `/${role}s/${userData.id}`,
+			})
+		setCurrentComment('')
 	}
 
 	return propertyData ? (
@@ -225,6 +243,24 @@ function PropertyPage(id) {
 						<div className='propertyInfoReview__comment-content'>{comment.content}</div>
 					</div>
 				))}
+				<div className='property__addComment'>
+					<form>
+						<TextField
+							value={currentComment}
+							onChange={(e) => {
+								setCurrentComment(e.target.value)
+							}}
+							size='small'
+							variant='outlined'
+							label='Add a comment'
+							color='secondary'
+							placeholder='Add a comment'
+						/>
+						<button type='submit' onClick={handleCommentSubmit} style={{ display: 'none' }}>
+							Submit
+						</button>
+					</form>
+				</div>
 			</div>
 			<hr />
 			<div className='property__owner'>
