@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
 	const [error, setError] = useState('')
 	const [open, setOpen] = useState(true)
 	const [currentUser, setCurrentUser] = useState(null)
+	const [, setRole] = useState('user')
 
 	function saveToLocalStorage(key, state) {
 		try {
@@ -54,11 +55,15 @@ export const AuthProvider = ({ children }) => {
 		return auth.createUserWithEmailAndPassword(email, password)
 	}
 	async function signIn(email, password) {
-		if ((await db.collection('users').where('email', '==', email).get()).docs.length === 1) {
+		if (
+			(await db.collection('users').where('email', '==', email).get())
+				.docs.length === 1
+		) {
 			saveToLocalStorage('role', 'user')
 		} else {
 			throw 'This account does not exist or has another role!'
 		}
+		auth.signInWithEmailAndPassword(email, password)
 		db.collection(`users`)
 			.where('email', '==', email)
 			.onSnapshot((snapshot) =>
@@ -69,16 +74,25 @@ export const AuthProvider = ({ children }) => {
 					})[0]
 				)
 			)
-		return auth.signInWithEmailAndPassword(email, password)
 	}
 	async function signInAsHost(email, password) {
-		if ((await db.collection('users').where('email', '==', email).get()).docs.length === 1) {
+		auth.signInWithEmailAndPassword(email, password)
+		if (
+			(await db.collection('users').where('email', '==', email).get())
+				.docs.length === 1
+		) {
 			throw 'This account does not exist or has another role!'
 		}
 		const checkRole =
-			(await db.collection('admins').where('email', '==', email).get()).docs.length === 1
+			(await db.collection('admins').where('email', '==', email).get())
+				.docs.length === 1
 				? 'admin'
-				: (await db.collection('owners').where('email', '==', email).get()).docs.length === 1
+				: (
+						await db
+							.collection('owners')
+							.where('email', '==', email)
+							.get()
+				  ).docs.length === 1
 				? 'owner'
 				: () => {
 						throw 'This account does not exist or has another role!'
@@ -95,7 +109,6 @@ export const AuthProvider = ({ children }) => {
 					})[0]
 				)
 			)
-		return auth.signInWithEmailAndPassword(email, password)
 	}
 
 	function signOut() {
@@ -122,13 +135,19 @@ export const AuthProvider = ({ children }) => {
 				saveToLocalStorage,
 				loadFromLocalStorage,
 				deleteLocaStorage,
+				setRole,
 			}}>
 			{children}
 			{error === '' ? (
 				<></>
 			) : (
-				<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-					<MuiAlert elevation={6} severity={success ? 'success' : 'error'}>
+				<Snackbar
+					open={open}
+					autoHideDuration={2000}
+					onClose={handleClose}>
+					<MuiAlert
+						elevation={6}
+						severity={success ? 'success' : 'error'}>
 						{error}
 					</MuiAlert>
 				</Snackbar>

@@ -283,6 +283,7 @@ function PostProperty() {
 							margin='normal'
 							label='sharewithhost'
 							color='secondary'
+							name='sharewithhost'
 							onChange={(e) => {
 								setProperty({ ...property, [e.target.name]: e.target.value })
 							}}>

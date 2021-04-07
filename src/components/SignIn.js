@@ -51,7 +51,7 @@ export default function SignIn(props) {
 				showError('User Signed In', true)
 				setTimeout(() => {
 					history.push(from)
-				}, 1000)
+				}, 200)
 			} catch (error) {
 				showError(typeof error === 'object' ? error.message : error, false)
 			}

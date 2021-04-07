@@ -3,7 +3,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import StarIcon from '@material-ui/icons/Star'
 import '../style/SearchResult.css'
 
-function SearchResult({ img, location, title, description, star, price, onClick, favorites }) {
+function SearchResult({ img, location, title, description, star, price, onClick, favorites, type }) {
 	return (
 		<div className='searchResult' onClick={onClick}>
 			<img src={img} alt='' />
@@ -15,7 +15,8 @@ function SearchResult({ img, location, title, description, star, price, onClick,
 				<div className='searchResult__infoTop'>
 					<p>{location}</p>
 					<h3>{title}</h3>
-					<p>{description}</p>
+					<p>{description.length > 500 ? description.slice(0, 500) + '...' : description}</p>
+					<p>{type}</p>
 				</div>
 				<div className='searchResult__infoBottom'>
 					<div className='searchResult__stars'>

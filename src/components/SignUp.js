@@ -75,7 +75,7 @@ export default function SignUp() {
 				showError('User is created. Redirect to Home', true)
 				setTimeout(() => {
 					history.push('/')
-				}, 1000)
+				}, 200)
 			} catch (error) {
 				showError(typeof error === 'object' ? error.message : error, false)
 			}
@@ -106,7 +106,7 @@ export default function SignUp() {
 				showError('User is created. Redirecting to Home', true)
 				setTimeout(() => {
 					history.push('/')
-				}, 1000)
+				}, 200)
 			} catch (error) {
 				showError(typeof error === 'object' ? error.message : error, false)
 			}

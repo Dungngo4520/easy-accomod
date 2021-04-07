@@ -142,6 +142,7 @@ function SearchPage() {
 						<Slider
 							color='secondary'
 							value={priceFilter}
+							max={200}
 							min={0}
 							onChange={(e, newValue) => {
 								setPriceFilter(newValue)
@@ -173,6 +174,7 @@ function SearchPage() {
 							color='secondary'
 							value={areaFilter}
 							min={0}
+							max={200}
 							onChange={(e, newValue) => {
 								setAreaFilter(newValue)
 								setDataFiltered(
@@ -205,7 +207,7 @@ function SearchPage() {
 				.filter((item) => {
 					return item.status === 'verified' && item.showuntil.seconds >= new Date().getTime() / 1000
 				})
-				.map(({ id, images, address, title, description, rating, favorites, price }) => (
+				.map(({ id, images, address, title, description, rating, favorites, price, type }) => (
 					<SearchResult
 						key={id}
 						id={id}
@@ -216,6 +218,7 @@ function SearchPage() {
 						star={rating}
 						favorites={favorites}
 						price={price}
+						type={type}
 						onClick={() => {
 							history.push(`/properties/${id}`)
 						}}

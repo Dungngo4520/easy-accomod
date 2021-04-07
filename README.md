@@ -1,3 +1,10 @@
+## Web Design Assignment
+
+#### To run this app, go to chatsapp folder and run: 
+```npm i; if ($LASTEXITCODE -eq 0) { npm start }```
+
+Deployed version: [Easy Accomod](https://easyaccomod-3598a.web.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
